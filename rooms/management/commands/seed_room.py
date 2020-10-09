@@ -1,5 +1,6 @@
 import random
 from django.core.management.base import BaseCommand
+from django.contrib.admin.utils import flatten
 from django_seed import Seed
 from faker import Faker
 from rooms import models as room_models
@@ -14,11 +15,6 @@ class Command(BaseCommand):
         parser.add_argument(
             "--number", default=2, type=int, help="How many rooms you want to create"
         )
-
-    def fakeAdd(self):
-        faker = Faker('ko_KR')
-        city = faker.address().split(" ")[0]
-        return city
 
     def handle(self, *args, **options):
         number = options.get("number")
@@ -43,5 +39,14 @@ class Command(BaseCommand):
                 "baths": lambda x: random.randint(1, 5),
             },
         )
-        seeder.execute()
+        created_photos = seeder.execute()
+        created_clean = flatten(list(created_photos.values()))
+        for pk in created_clean:
+            room = room_models.Room.objects.get(pk=pk)
+            for i in range(3, random.randint(5, 10)):
+                room_models.Photo.objects.create(
+                    caption=seeder.faker.sentence(),
+                    room=room,
+                    file=f"room_photos/{random.randint(1, 31)}.webp",
+                )
         self.stdout.write(self.style.SUCCESS(f"{number} rooms created!"))
