@@ -13,7 +13,10 @@
         <a href="?page={{page|add:-1}}">Previous</a>
     {% endif %}
 
-    Page {{page}} of {{page_count}}
+
+    {% for page in page_range %}
+        <a href="?page={{page}}">{{page}}</a>
+    {% endfor %}
 
     {% if not page == page_count  %}
         <a href="?page={{page|add:1}}">Next</a>
