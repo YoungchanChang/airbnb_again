@@ -33,7 +33,10 @@ class SearchView(View):
     def get(self, request):
 
         country = request.GET.get("country")
-
+        # 무슨 데이터인지 모르지만 form에 넘겨준다.
+        form = forms.SearchForm(request.GET)
+        print(form)
+        print(form.cleaned_data)
         if country:
 
             # 무슨 데이터인지 모르지만 form에 넘겨준다.
