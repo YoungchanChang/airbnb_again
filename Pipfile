@@ -11,6 +11,8 @@ black = "*"
 django = "==2.2.5"
 pillow = "*"
 django-countries = "*"
+django-dotenv = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
