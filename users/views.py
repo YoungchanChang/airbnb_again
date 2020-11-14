@@ -236,8 +236,9 @@ class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView
         return form
 
 class UpdatePasswordView(
-    mixins.EmailLoginOnlyView,
+
     mixins.LoggedInOnlyView,
+    mixins.EmailLoginOnlyView,
     SuccessMessageMixin,
     PasswordChangeView,
 ):
