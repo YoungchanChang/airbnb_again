@@ -13,9 +13,6 @@ class Command(BaseCommand):
             "--number", default=2, type=int, help="How many users you want to create"
         )
 
-
-
-
     def handle(self, *args, **options):
         number = options.get("number")
 
@@ -26,7 +23,8 @@ class Command(BaseCommand):
             "first_name": lambda x: faker.name()[0:1],
             "last_name": lambda x: faker.name()[1:4],
             "is_staff": False,
-            "is_superuser": False
+            "is_superuser": False,
+            "avatar" : None
         })
         seeder.execute()
         self.stdout.write(self.style.SUCCESS(f"{number} users created!"))

@@ -37,6 +37,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
 ]
 
 THIRD_PARTY_APPS = ["django_countries", "django_seed"]
@@ -49,6 +50,7 @@ PROJECT_APPS = [
     "reservations.apps.ReservationsConfig",
     "lists.apps.ListsConfig",
     "conversations.apps.ConversationsConfig",
+    "django_seed",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
@@ -61,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -146,3 +149,5 @@ EMAIL_PORT = "587"
 EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD =os.environ.get("MAILGUN_PASSWORD")
 EMAIL_FROM = "noreply@sandbox2ba559537f904296851b8b1b0c8d7d24.mailgun.org"
+
+INTERNAL_IPS = ('127.0.0.1',)
