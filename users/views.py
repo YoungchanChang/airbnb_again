@@ -53,6 +53,12 @@ class SignUpView(mixins.LoggedOutOnlyView, FormView):
         user.verify_email()
         return super().form_valid(form)
 
+    def get_success_url(self):
+        next_arg = self.request.GET.get("next")
+        if next_arg is not None:
+            return next_arg
+        else:
+            return reverse("core:home")
 
 def complete_verification(request, key):
     try:
@@ -200,7 +206,7 @@ def kakao_callback(request):
         return redirect(reverse("users:login"))
 
 
-class UpdateProfileView(SuccessMessageMixin, UpdateView):
+class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
 
 
     model = models.User
@@ -229,7 +235,13 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
         form.fields["first_name"].widget.attrs = {"placeholder": "First name"}
         return form
 
-class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+class UpdatePasswordView(
+    mixins.EmailLoginOnlyView,
+    mixins.LoggedInOnlyView,
+    SuccessMessageMixin,
+    PasswordChangeView,
+):
+
 
     template_name = "users/update-password.html"
     success_message = "Password Updated"
