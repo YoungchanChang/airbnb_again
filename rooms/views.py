@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage
 from . import models, forms
 from django.urls import reverse
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, UpdateView
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django_countries import countries
@@ -116,3 +116,27 @@ class SearchView(View):
             form = forms.SearchForm()
 
         return render(request, "rooms/search.html", {"form": form})
+
+class EditRoomView(UpdateView):
+
+    model = models.Room
+    template_name = "rooms/room_edit.html"
+    fields = (
+        "name",
+        "description",
+        "country",
+        "city",
+        "price",
+        "address",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
+    )
